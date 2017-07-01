@@ -1,0 +1,119 @@
+
+<!-- Tutorial URL: http://sixrevisions.com/css/responsive-background-image/ -->
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Práctica 1 - AW<</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div class="cabecera">
+	  	<div class="cabecera">
+	  		<img src="images/img_cabecera/mineros-juego.jpg" alt="Imagen Cabecera" id="img_cabecera">
+	  	</div>
+	</div>
+	<div class="menu">
+		<div class="menu_iz">
+			<ul>
+				<li id="li_inicial">
+					Seleccione una opción ►
+				</li>
+				<li>
+					<a href="../usuarios/unlogin.html">Desconectar</a>
+				</li>
+				<li>
+					<a href="unirse_partida_init.html">Unirse a partida</a>
+				</li>
+				<li>
+					<a href="nueva_partida.html">Crear partida</a>
+				</li>
+			</ul>
+	  	</div>
+	  	<div class="menu_dr">
+	  		<div class="caja_login">
+	  			<%
+	  			if (!llave){%>
+		  			<div class="img_unlogin">
+		  				<img src="./images/icon_login/padlock_unlogin.png">
+		  			</div>
+	  			<%
+	  			}
+	  			else{%>
+					<div class="img_login">
+                                            <img src="/usuarios/imagen/<%= nick %>">
+		  			</div>
+	  			<%}
+	  			%>
+	  			<div class="texto_login">
+	  				<p>
+	  					<%= nick %>
+	        		</p>
+	  			</div>
+	    	</div>
+	  	</div>
+	</div>
+	<div class="contenido">
+		<div class="panel">
+			<div class="panel_contenido">
+				<h1>
+					Nueva partida
+				</h1>
+				<h3>
+					Introduce los datos de la partida.
+				</h3>
+				<hr /><br>
+				<form action="registrar_partida.html" method="post">
+					<div class="tabla">
+						<div class="new_line">
+							<div class="text_formulario_nombre_partida">
+								<h3>
+									Nombre <span id="asterisco">*</span>:
+								</h3>
+							</div>
+							<div class="inputs_formulario_nombre_partida">
+								<input type="text" name="nombre_partida" value="" required autofocus/>
+							</div>
+						</div>
+						<div class="new_line">
+							<div class="text_formulario_max_jugadores">
+								<h3>
+									Número máximo de jugadores (entre 3 y 7)<span id="asterisco">*</span>:
+								</h3>
+							</div>
+							<div class="inputs_formulario_max_jugadores">
+								<input type="number" name="num_jugadores" value="" min="3" max="7" required/>
+							</div>
+						</div>
+					</div>
+					<div class="panel_botones_reg">
+						<a href="./bienvenida.html" class="inputs_formulario_reg">Volver a página principal</a>
+						<input class="inputs_formulario_reg" type="submit" value="Crear"/>
+					</div>
+				</form>
+				<br><hr /><br>
+				<p class=
+					<% 
+						if(llave_mensaje === "error") { 
+					%>
+						"mensaje_error"
+					<% 
+						} else if(llave_mensaje === "ok") {
+					%>
+						"mensaje_OK"
+					<%
+						} else {
+					%>						
+						"mensaje_WARNING"
+					<%
+						}
+					%>
+				>
+					<%= mensaje %>
+				</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,255 @@
+
+<!-- Tutorial URL: http://sixrevisions.com/css/responsive-background-image/ -->
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Práctica 1 - AW<</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div class="cabecera">
+	  	<div class="cabecera"> 
+	  		<img src="images/img_cabecera/mineros-juego.jpg" alt="Imagen Cabecera" id="img_cabecera"> 
+	  	</div>
+	</div>
+	<div class="menu">
+		<div class="menu_iz">
+			<ul>
+				<li id="li_inicial">
+					Seleccione una opción ►
+				</li>
+				<li>
+					<a href="../usuarios/unlogin.html">Desconectar</a>
+				</li>
+				<li>
+					<a href="unirse_partida_init.html">Unirse a partida</a>
+				</li>
+				<li>
+					<a href="nueva_partida.html">Crear partida</a>
+				</li>
+			</ul>
+	  	</div>
+	  	<div class="menu_dr">
+	  		<div class="caja_login">
+                        <%
+                        if (!llave){%>
+                                <div class="img_unlogin">
+                                        <img src="./images/icon_login/padlock_unlogin.png">
+                                </div>
+                        <%
+                        } else{%>
+                                <div class="img_login">
+                                        <img src="/usuarios/imagen/<%= user.nick %>">
+                                </div>
+                        <%}  %>
+                        <div class="texto_login">
+                                <p>
+                                        <%= user.nick %>
+                        </p>
+                        </div>
+            </div>
+	  	</div>
+	</div>
+	<div class="contenido contenido_partidas"> 
+		<div class="panel">
+			<div class="panel_contenido">
+				<h1 id="inicio">
+					<% if (user.sexo === "H"){ %>
+			  			¡Bienvenido, <%= user.nick %>!
+		  			<% }else{ %>
+						¡Bienvenida, <%= user.nick %>!	
+		  			<%} %>
+				</h1>
+<p class="<%=clase%>"><%= mensaje%></p>
+
+				<hr /><br>
+
+
+				<h2 id="estado_abierto">
+					Partidas Creadas
+				</h2>
+				<h3>
+					Las siguientes partidas han sido creadas por ti, pero aún están a la espera de recibir más jugadores.
+				</h3>
+				<hr /><br>
+				<h3>
+					<% if(partidasCreadas.length>0) { %>
+                                            <table class="tabla_partida_abierta">
+                                                    <tr>
+                                                            <th>Nombre</th>
+                                                            <th>Fecha</th>
+                                                            <th>Número de jugadores</th>
+                                                    </tr>
+                                                    <% partidasCreadas.forEach(function(p) { %>
+                                                    <tr>
+                                                            <td><%= p.nombre %></td>
+                                                            <td><%= p.fecha_creacion %></td>
+                                                            <td><%= p.num_jugadores_ativos %> / <%= p.num_jugadores_Max %></td>
+                                                            <td class="cerrar_partida"> <a href="/partidas/cerrar_partida_<%= p.id %>.html" >Cerrar partida </a></td>
+                                                    </tr>
+                                            <% }); %>
+                                            </table>
+                                        
+                                            
+					<%} else {%>
+                    	<h3>No existe ninguna partida a la espera de jugadores.</h3>
+                    <%}%>
+				</h3>
+				<hr /><br><br>
+
+				<h2 id="estado_abierto">
+					Partidas a la espera
+				</h2>
+				<h3>
+					Las siguientes partidas son a las que te has unido y aún estan a la espera
+				</h3>
+				<hr /><br>
+				<h3>
+					
+						<% if(partidasEnEspera.length>0) { %>
+						<table class="tabla_unirse_partida">
+	                            <tr>
+	                                <th>Nombre</th>
+	                                <th>Fecha</th>
+	                                <th>Máximo de jugadores</th>
+	                                <th>jugadores apuntados</th>
+	                            </tr>
+	                            <% partidasEnEspera.forEach(function(partida) { %>
+	                            <tr>
+	                                <td><%= partida.nombre %></td>
+	                                <td><%= partida.fecha_creacion %></td>
+	                                <td><%= partida.num_jugadores_Max %></td>
+	                                <td>
+	                                    <% 
+	                                        var contador = 0;
+	                                        for(var i in partida.jugadores) {
+	                                    %> 
+	                                    <%= partida.jugadores[i]; %>
+	                                    <% 
+	                                        contador = contador + 1;
+	                                            if (contador!=partida.jugadores.length){
+	                                                %>
+	                                                <%= "," %>
+	                                                <%
+	                                            }
+	                                        }
+	                                    %>
+	                                </td>
+	                                <td class="cerrar_partida"><a href="/partidas/desunir_<%= partida.id %>">Desunirse</a></td>
+	                            </tr>
+	                            <% }); %>
+	                        </table>
+	                        <%} else {%>
+	                            <h3>No existe ninguna partida a la espera de empezar.</h3>
+	                        <%}%>
+						
+				</h3>
+				<hr /><br><br>
+
+
+
+
+
+				<h2 id="estado_activo">
+					Partidas activas
+				</h2>
+				<h3>
+					Haz clic en el título de la partida para ver su estado actual.
+				</h3>
+				<h3>
+					Se marcan resaltadas las partidas en las que es tu turno.
+				</h3>
+				<hr /><br>
+				<h3>
+					<% if(partidasActivas.length>0) { %>
+					<table class="tabla_partida_activa">
+						<tr>
+							<th>Nombre</th>
+							<th>Usuario creador</th>
+							<th>Fecha</th>
+							<th>Turno</th>
+						</tr>
+
+						<% partidasActivas.forEach(function(p) { %>
+
+                        	<% if(p.turno === user.nick){ %>
+
+                                <tr id="miturno" onclick="location='/partidas/jugarpartida_<%= p.id %>.html'">
+                                    <td><%= p.nombre %></td>
+                                    <td><%= p.creadorNick %></td>
+                                    <td><%= p.fecha_creacion %></td>
+                                    <td><%= p.turno %></td>
+								</tr>
+
+                            <% }else{ %>
+                            	
+                            	
+                                <tr onclick="location='/partidas/jugarpartida_<%= p.id %>.html'">
+                               		<td><%= p.nombre %> </td>
+                                	<td><%= p.creadorNick %></td>
+                                	<td><%= p.fecha_creacion %></td>
+                                	<td><%= p.turno %></td>
+                               	</tr>
+
+
+                            <% } %>
+
+						<% }); %> 
+					</table>
+					<%} else {%>
+                            <h3>No existe ninguna partida en curso.</h3>
+                        <%}%>
+				</h3>
+				<hr /><br><br>
+
+
+				</h3>
+					<h2 id="estado_terminado">
+						Partidas terminadas
+					</h2>
+				<h3>
+				<h3>
+					Las siguentes partidas son en las que has participado y ya terminaron.
+				</h3>
+				<hr /><br>
+
+					<% if(arrayParesPartidasTerminadas.length>0) { %>
+					<table class="tabla_partida_terminada">
+						<tr>
+							<th>Nombre</th>
+							<th>Usuario creador</th>
+							<th>¿Has ganado?</th>
+						</tr>
+
+
+						<% arrayParesPartidasTerminadas.forEach(function(par) { %>
+						<tr onclick="location='/partidas/jugarpartida_<%= par.partidaTerminada.id %>.html'">
+						  	<td><%= par.partidaTerminada.nombre %></td>
+						  	<td><%= par.partidaTerminada.creadorNick %></td>
+
+						  	<% if(par.partidaTerminada.ganador === par.rolJugador){ %>
+
+                                <td>SI</td>
+                            <% }else{ %>
+                                <td>NO</td>
+                            <% } %>
+						</tr>
+					<% }); %>
+
+
+					</table>
+					<%} else {%>
+                            <h3>No existe ninguna partida terminada.</h3>
+                        <%}%>
+				</h3>
+				<hr /><br><br>
+
+					
+				</h3>
+			</div>	
+		</div>
+	</div>
+</body>
+</html>

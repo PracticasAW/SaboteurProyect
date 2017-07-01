@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Práctica 1 - AW<</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div class="cabecera">
+	  	<div class="cabecera"> 
+	  		<img src="images/img_cabecera/mineros-juego.jpg" alt="Imagen Cabecera" id="img_cabecera"> 
+	  	</div>
+	</div>
+	<div class="menu">
+		<div class="menu_iz">
+			<ul>
+				<li id="li_inicial">
+                        Seleccione una opción ►
+                    </li>
+                    <li>
+                        <a href="../usuarios/unlogin.html">Desconectar</a>
+                    </li>
+                    <li>
+                        <a href="unirse_partida_init.html">Unirse a partida</a>
+                    </li>
+                    <li>
+                        <a hre-f="nueva_partida.html">Crear partida</a>
+                    </li>
+			</ul>
+	  	</div>
+	  	<div class="menu_dr">
+	  		<div class="caja_login">
+	  			<%
+                    if (!llave){%>
+                        <div class="img_unlogin">
+                            <img src="./images/icon_login/padlock_unlogin.png">
+                        </div>
+                    <%
+                    }
+                    else{%>
+                        <div class="img_login">
+                            <img src="/usuarios/imagen/<%= nick %>">
+                        </div>
+                    <%}
+                    %>
+                    <div class="texto_login">
+                        <p>
+                            <%= nick %>
+                    	</p>
+                    </div>
+	    	</div>
+	  	</div>
+	</div>
+	<div class="contenido contenido_partidas"> 
+		<div class="panel">
+			<div class="panel_contenido">
+				<h1 id="jugadores">
+					Partida: <%= nombre_partida %>
+				</h1>
+				<h3>
+					Creador por: <%= creadaby %>
+				</h3>
+				<h3>
+					Jugadores: 
+					<% 
+                        var contador = 0;
+                        var encontrados = 0;
+                        for(var i in players) {
+                        	if (cartas_user[sel_carta-1]==="PicoRoto"){
+                        		if (players[i].pico==="ok"){
+                        		%>
+                        			<a class="blink jugadores" href="modificarPico_?estado_pico=roto&id_jugador=<%=players[i].id_jugador%>">
+                        			<%= players[i].nick; %>
+                        		<% 
+                        			encontrados = encontrados + 1;
+                        		}
+                        	}
+                        	else if (cartas_user[sel_carta-1]==="PicoArreglado"){
+                        		if (players[i].pico!=="ok"){
+                        		%>
+                        			<a class="blink jugadores" href="modificarPico_?estado_pico=ok&id_jugador=<%=players[i].id_jugador%>">
+                        			<%= players[i].nick; %>
+                        		<% 
+                        			encontrados = encontrados + 1;
+                        		}
+                        	}
+                        	else {
+                    %> 
+                    <%= players[i].nick; %>
+                    <% 
+                    		}
+                    	if (cartas_user[sel_carta-1]==="PicoRoto" || cartas_user[sel_carta-1]==="PicoArreglado"){
+                        		%>
+                        			</a> 
+                        		<% 
+                        	}
+                        contador = contador + 1;
+                            if (contador!=players.length){
+                                %>
+                                <%= "," %>
+                                <%
+                            }
+                        }
+                    	if (encontrados === 0 && cartas_user[sel_carta-1]==="PicoRoto"){
+                    		%> TODOS LOS JUGADOR TIENEN EL PICO ROTO <% 
+                    	} else if (encontrados === 0 && cartas_user[sel_carta-1]==="PicoArreglado"){
+                    		%> NINGUN JUGADOR CON EL PICO ROTO <% 
+                    	}
+                    %>
+				</h3>
+				<h3>
+					Turno de: <%= turno_de %>
+				</h3>
+				<h3 id="turnos_restantes">
+					Turnos restantes: <%= turnos_rest %>
+				</h3>
+				<h3>
+					Roll: <%= roll %>
+				</h3>
+				<h3>
+					Estado de tu pico: <%= estado_pico %>
+				</h3>
+				<div class="panel_botones_reg">
+				<% var es_tu_turno = false;
+				    if (turno_de===nickJugador){
+						es_tu_turno = true;
+					}
+				%>
+                    <a href="./bienvenida.html" class="inputs_formulario_reg">Volver a página principal</a>
+                    <% if (es_tu_turno && sel_carta>=0){%>
+                    	<a href="./descartar" class="inputs_formulario_reg">Descartar</a>
+                    <% }%>
+                    <p class="<%=clase%>"><%= mensaje%></p>
+
+                </div>
+				<br><hr /><br>
+				<h2 id="texto_tablero">
+					Tablero
+				</h2>
+				<table class="tablero">
+						<% 	
+							for (var Y = 0; Y < 7; Y++){
+								%>
+									<tr>
+								<%
+									for (var X = 0; X < 7; X++){
+								%>
+										<td>
+									  	  <%if (Y === 3 && X===0){%>
+										        <img src='./images/piezas/<%= cartas_tablero[X][Y][0]%>.png'>
+										  <%}	
+										  else if ((Y === 1 || Y === 3 || Y === 5) && X===6){
+										  	if (cartas_user[sel_carta-1]==="Lupa" && cartas_tablero[X][Y][0]==="DNK"){ %>
+										  		<a href='insert_card_?posicion_y=<%=Y%>&posicion_x=<%=X%>'>
+										  			<img class="blink" src='./images/piezas/<%= cartas_tablero[X][Y][0]%>.png'>
+										  		</a>
+										  	<%} else {%>
+										  		<img src='./images/piezas/<%= cartas_tablero[X][Y][0]%>.png'>
+										  	<%}%>
+										  <%}
+										    else{
+											    if (cartas_tablero[X][Y]!==undefined){
+											    	if (cartas_user[sel_carta-1]==="Bomba"){%>
+											    		<a class="flip blink" href="insert_card_?posicion_y=<%=Y%>&posicion_x=<%=X%>">
+											    	<%} else {%>
+											    		<a class="flip" href="#">
+											    	<%}%>
+												      	<span class="front"><img src='./images/piezas/T<%= cartas_tablero[X][Y][0]%>.png'></span>
+												      	<span class="back"><%= cartas_tablero[X][Y][1] %></span>
+											      	</a>
+											    <%}
+											    else{
+											    	if (es_tu_turno && sel_carta>=0){
+											      		if (cartas_user[sel_carta-1]!=="Bomba" && cartas_user[sel_carta-1]!=="PicoRoto" && cartas_user[sel_carta-1]!=="PicoArreglado"){%>
+											      			<a href='insert_card_?posicion_y=<%=Y%>&posicion_x=<%=X%>'>
+											      		<%}%>
+											      <%}%>
+											      		<div > </div>
+											      <%if (es_tu_turno){
+											      %>
+											      		</a>
+											      <%
+											      	}
+											    }
+										    }%>
+										</td>
+								<%
+									}
+								%>
+									</tr>
+								<%
+							}
+						%>
+				</table>
+				<br><hr />
+				<% if (estado !== "TERMINADA"){ %>
+				<h2 id="texto_tus_cartas">
+					Tus cartas
+				</h2>
+				<table class="tablero_tuscartas">
+					<tr>
+						<% 
+							var contador = 1;
+							cartas_user.forEach(function(num_carta) {
+								if (contador==sel_carta) {%>
+									<td id="tablero_tuscartas_sel">
+								<%} else {%>
+									<td>
+								<%}
+								if (es_tu_turno)
+								{%>
+									<a href='select_card?sel_carta=<%= contador%>&sel_carta_real=<%= num_carta%>&estado_pico=<%= estado_pico%>'>
+							  <%}
+							  	if (num_carta<=15) {%>
+									<img src='./images/piezas/T<%= num_carta%>.png'>
+							  <%} else {%>
+							  		<img src='./images/piezas/<%= num_carta%>.png'>
+							  <%}if (es_tu_turno)
+								{%>
+									</a>
+							  <%}%>
+									</td>
+							<% 
+								contador++;
+							});%>
+					</tr>
+				</table>
+				<%}%>
+				
+
+				<br><hr /><br>
+				<h2 id="texto_tus_cartas">
+					Comentarios
+				</h2>
+				<br>
+
+				<div class="panel_principal_comentarios">
+
+
+				<% arrayComentarios.forEach(function(c){ %>
+
+					<div class="panel_comentario">
+						<div class="panel_contenido_comentario">
+							<div>
+								<div class="img_comentario">
+									<img src="/usuarios/imagen/<%= c.nick %>">
+								</div>
+								<span id="nick_comentario"><%= c.nick %>
+
+								</span>
+							</div>
+
+
+							<%= c.fecha_hora %> <br>
+							<h3> <%= c.comentario %> </h3>
+						</div>
+					</div>
+				<%})%>
+
+
+
+					<div id="panel_intro_comentario">
+						<div class="panel_contenido_comentario">
+
+							<form action="registrar_comentario_<%=nombre_partida%>.html" method="post">
+								<div class="tabla">
+									<div class="new_line">
+										<div>
+											<h3>
+												Introduce aquí tu comentario: <span id="asterisco">*</span>:
+											</h3> 
+										</div>
+
+										<div class="new_line">
+
+											<textarea name="comentario" id="text_comentario"></textarea>
+										</div>
+									</div>
+
+								</div>
+								<div class="panel_botones_reg">
+									<input class="inputs_formulario_reg" type="submit" value="Enviar"/>
+								</div>
+							</form>
+						</div>
+					</div>
+
+		
+
+
+			</div>
+
+			</div>	
+		</div>
+	</div>
+</body>
+</html>
+			</div>	
+		</div>
+	</div>
+</body>
+</html>

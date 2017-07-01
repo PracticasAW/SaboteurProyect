@@ -1,0 +1,130 @@
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Práctica 1 - AW<</title>
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <body>
+        <div class="cabecera">
+            <div class="cabecera">
+                <img src="images/img_cabecera/mineros-juego.jpg" alt="Imagen Cabecera" id="img_cabecera">
+            </div>
+        </div>
+        <div class="menu">
+            <div class="menu_iz">
+                <ul>
+                    <li id="li_inicial">
+                        Seleccione una opción ►
+                    </li>
+                    <li>
+                        <a href="../usuarios/unlogin.html">Desconectar</a>
+                    </li>
+                    <li>
+                        <a href="unirse_partida_init.html">Unirse a partida</a>
+                    </li>
+                    <li>
+                        <a href="nueva_partida.html">Crear partida</a>
+                    </li>
+                </ul>
+            </div>
+           <div class="menu_dr">
+            <div class="caja_login">
+                        <%
+                        if (!llave){%>
+                                <div class="img_unlogin">
+                                        <img src="./images/icon_login/padlock_unlogin.png">
+                                </div>
+                        <%
+                        }
+                        else{%>
+                                <div class="img_login">
+                                    <img src="/usuarios/imagen/<%= nick %>">
+                                </div>
+                        <%}
+                        %>
+                        <div class="texto_login">
+                                <p>
+                                        <%= nick %>
+                        </p>
+                        </div>
+            </div>
+        </div>
+        </div>
+        <div class="contenido">
+            <div class="panel">
+                <div class="panel_contenido">
+                    <h1>
+                        Unirse
+                    </h1>
+                    <h3>
+                        A continuación se muestra una lista con las partidas abiertas que admiten jugadores.
+                    </h3>
+                    <hr /><br>
+                    <h3>
+                        <% if(partidas.length>0) { %>
+                        <table class="tabla_unirse_partida">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Máximo de jugadores</th>
+                                <th>jugadores apuntados</th>
+                            </tr>
+                            <% partidas.forEach(function(partida) { %>
+                            <tr>
+                                <td><%= partida.nombre %></td>
+                                <td><%= partida.fecha_creacion %></td>
+                                <td><%= partida.num_jugadores_Max %></td>
+                                <td>
+                                    <% 
+                                        var contador = 0;
+                                        for(var i in partida.jugadores) {
+                                    %> 
+                                    <%= partida.jugadores[i]; %>
+                                    <% 
+                                        contador = contador + 1;
+                                            if (contador!=partida.jugadores.length){
+                                                %>
+                                                <%= "," %>
+                                                <%
+                                            }
+                                        }
+                                    %>
+                                </td>
+                                <td class="cerrar_partida"><a href="./reg_union/<%= partida.id %>">Unirse</a></td>
+                            </tr>
+                            <% }); %>
+                        </table>
+                        <%} else {%>
+                            <h3>No existe ninguna partida que admita jugadores en estos momentos.</h3>
+                        <%}%>
+                    </h3>
+                    <div class="panel_botones_reg">
+                        <a href="./bienvenida.html" class="inputs_formulario_reg">Volver a página principal</a>
+                    </div>
+                    <br><hr /><br>
+                    <p class=
+                    <% 
+                        if(llave_mensaje === "error") { 
+                    %>
+                        "mensaje_error"
+                    <% 
+                        } else if(llave_mensaje === "ok") {
+                    %>
+                        "mensaje_OK"
+                    <%
+                        } else {
+                    %>                      
+                        "mensaje_WARNING"
+                    <%
+                        }
+                    %>
+                >
+                    <%= mensaje %>
+                </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

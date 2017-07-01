@@ -1,0 +1,147 @@
+
+<!-- Tutorial URL: http://sixrevisions.com/css/responsive-background-image/ -->
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Práctica 1 - AW<</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div class="cabecera">
+	  	<div class="cabecera"> 
+	  		<img src="images/img_cabecera/mineros-juego.jpg" alt="Imagen Cabecera" id="img_cabecera"> 
+	  	</div>
+	</div>
+	<div class="menu">
+		<div class="menu_iz">
+			<ul>
+				<li id="li_inicial">
+					Seleccione una opción ►
+				</li>
+				<li>
+					<a href="login_usuario.html">Login</a>
+				</li>
+				<li>
+					<a href="nuevo_usuario.html">Nuevo usuario</a>
+				</li>
+			</ul>
+	  	</div>
+	  	<div class="menu_dr">
+	  		<div class="caja_login">
+	  			<%
+	  			if (!llave){%>
+		  			<div class="img_unlogin">
+		  				<img src="./images/icon_login/padlock_unlogin.png">
+		  			</div>
+	  			<%
+	  			}
+	  			else{%>
+					<div class="img_login">
+                                            <img src="/usuarios/imagen/<%= nick %>">
+		  			</div>
+	  			<%}
+	  			%>
+	  			<div class="texto_login">
+	  				<p>		        		
+	  					<%= nick %>
+	        		</p>
+	  			</div>
+	    	</div>
+	  	</div>
+	</div>
+	<div class="contenido"> 
+		<div class="panel">
+			<div class="panel_contenido">
+				<h1>
+					Nuevo usuario
+				</h1>
+				<h3>
+					Introduce tus datos de usuario. Los campos marcados con asterisco (<span id="asterisco">*</span>) son obligatorios.
+				</h3>
+				<hr /><br>
+				<form action="registrar_usuario.html" method="post" enctype="multipart/form-data">
+					<div class="tabla">
+						<div class="new_line">
+							<div class="text_formulario_usuario">
+								<h3>
+									Nombre de usuario <span id="asterisco">*</span>:
+								</h3>
+							</div>	
+							<div class="inputs_formulario_usuario">
+								<input type="text" name="usuario" value="" autofocus required/>
+							</div>
+						</div>
+						<div class="new_line">
+							<div class="text_formulario_password">
+								<h3>
+									Contraseña <span id="asterisco">*</span>:
+								</h3>
+							</div>	
+							<div class="inputs_formulario_password">
+								<input type="password" name="password" value="" required/>
+							</div>
+						</div>
+						<div class="new_line">
+							<div class="text_formulario_nombre">
+								<h3>
+									Nombre completo: <span id="asterisco">*</span>:
+								</h3>
+							</div>	
+							<div class="inputs_formulario_nombre">
+								<input type="text" name="nombre" value="" required/>
+							</div>
+						</div>
+						<div class="new_line">
+							<div class="text_formulario_sexo">
+								<h3>
+									Sexo: <span id="asterisco">*</span>:
+								</h3>
+							</div>	
+							<div class="inputs_formulario_sexo">
+								<label>
+						        	<input type="radio" name="sexo" value="Hombre" checked> 
+						        	<h3>
+						        		Hombre
+						        	</h3>
+						        	<input type="radio" name="sexo" value="Mujer">
+						        	<h3>
+						        		Mujer
+						        	</h3>
+						        </label>
+							</div>
+						</div>
+						<div class="new_line">
+							<div class="text_formulario_foto">
+								<h3>
+									Foto:
+								</h3>
+							</div>	
+							<div class="inputs_formulario_foto">
+								<input type="file" name="foto" />
+							</div>
+						</div>
+						<div class="new_line">
+							<div class="text_formulario_fecha_nac">
+								<h3>
+									Fecha de nacimiento:
+								</h3>
+							</div>	
+							<div class="inputs_formulario_fecha_nac">
+								<input type="date" name="fecha_nacimiento" acept="image/*" class="trasparente" id="fecha_nacimiento"/>
+							</div>
+						</div>
+					</div>
+					<div class="panel_botones_reg">
+						<a href="../index.html" class="inputs_formulario_reg">Volver a página principal</a>
+						<input class="inputs_formulario_reg" type="submit" value="Registrarme"/>
+					</div>
+				</form>
+				<br><hr /><br>
+				<p class="mensaje_error"><%= mensaje %></p>
+			</div>	
+		</div>
+	</div>
+</body>
+</html>

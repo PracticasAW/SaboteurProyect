@@ -1,0 +1,68 @@
+
+<!-- Tutorial URL: http://sixrevisions.com/css/responsive-background-image/ -->
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Práctica 1 - AW</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div class="cabecera">
+	  	<div class="cabecera"> 
+	  		<img src="images/img_cabecera/mineros-juego.jpg" alt="Imagen Cabecera" id="img_cabecera"> 
+	  	</div>
+	</div>
+	<div class="menu">
+		<div class="menu_iz">
+			<ul>
+				<li id="li_inicial">
+					Seleccione una opción ►
+				</li>
+				<li>
+					<a href="./usuarios/login_usuario.html">Login</a>
+				</li>
+				<li>
+					<a href="./usuarios/nuevo_usuario.html">Nuevo usuario</a>
+				</li>
+			</ul>
+	  	</div>
+	  	<div class="menu_dr">
+	  		<div class="caja_login">
+	  			<%
+	  			if (!llave){%>
+		  			<div class="img_unlogin">
+		  				<img src="./images/icon_login/padlock_unlogin.png">
+		  			</div>
+	  			<%
+	  			}
+	  			else{%>
+					<div class="img_login">
+		  				<img src="/usuarios/imagen/<%= nick %>">
+		  			</div>
+	  			<%}
+	  			%>
+	  			<div class="texto_login">
+	  				<p>		        		
+	  					<%= nick %>
+	        		</p>
+	  			</div>
+	    	</div>
+	  	</div>
+	</div>
+	<div class="contenido"> 
+		<div class="panel">
+			<div class="panel_contenido">
+				<h1>
+					BIENVENIDO
+				</h1>
+				<hr /><br>
+				<h3>
+					Puede identificarse o crear una cuenta de usuario.
+				</h3>
+			</div>	
+		</div>
+	</div>
+</body>
+</html>
